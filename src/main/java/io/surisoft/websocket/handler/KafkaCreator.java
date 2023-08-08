@@ -25,7 +25,10 @@ public class KafkaCreator {
     KafkaProperties kafkaProperties;
     @Autowired
     TaskExecutor kafkaTaskExecutor;
-    @Value("${tester.kafka.topic}")
+    @Value("${kafka.host}")
+    private String kafkaHost;
+
+    @Value("${kafka.topic}")
     private String kafkaTopic;
 
     protected Function<Properties, KafkaConsumer<String, String>> kafkaConsumerFactory = KafkaConsumer::new;
@@ -34,7 +37,7 @@ public class KafkaCreator {
         Properties properties = new Properties();
         properties.putAll(kafkaProperties.buildConsumerProperties());
         properties.put(GROUP_ID_CONFIG, this.kafkaTopic + "-notification-consumer");
-        properties.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        properties.put(BOOTSTRAP_SERVERS_CONFIG, kafkaHost);
         properties.put(KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         properties.put(VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         properties.put(ENABLE_AUTO_COMMIT_CONFIG, Boolean.FALSE);

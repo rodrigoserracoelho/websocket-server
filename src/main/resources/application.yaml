@@ -1,0 +1,28 @@
+server:
+  port: 8888
+
+kafka:
+  topic: events
+  host: 
+websocket:
+  path: echo
+
+spring:
+  application:
+    name: websocket-server
+  cloud:
+    consul:
+      enabled: true
+      port: 8500
+      host: 
+      discovery:
+        instance-id: websocket-server-${server.port}
+        instance-group: dev
+        scheme: http
+        hostname: localhost
+        port: ${server.port}
+        tags: Owner=Your name, emailid=mail@domain.com
+        metadata:
+          group: dev
+          type: websocket
+        health-check-url: http://:${server.port}/actuator/health

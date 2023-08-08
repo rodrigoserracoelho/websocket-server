@@ -30,8 +30,8 @@ public class EchoApplication {
 	@Autowired
 	KafkaCreator kafkaCreator;
 
-	@Value("${tester.websocket.path}")
-	private String testerWebSocketPath;
+	@Value("${websocket.path}")
+	private String webSocketPath;
 
 	@Bean
 	public EchoHandler echoHandler() {
@@ -41,7 +41,7 @@ public class EchoApplication {
 	@Bean
 	public HandlerMapping handlerMapping() {
 		Map<String, WebSocketHandler> map = new HashMap<>();
-		map.put("/" + testerWebSocketPath, echoHandler());
+		map.put("/" + webSocketPath, echoHandler());
 		SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
 		mapping.setUrlMap(map);
 		mapping.setOrder(Ordered.HIGHEST_PRECEDENCE);
